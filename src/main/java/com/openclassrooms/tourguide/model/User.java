@@ -1,4 +1,4 @@
-package com.openclassrooms.tourguide.user;
+package com.openclassrooms.tourguide.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,11 +32,11 @@ public class User {
 	public String getUserName() {
 		return userName;
 	}
-	
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -44,15 +44,15 @@ public class User {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-	
+
 	public String getEmailAddress() {
 		return emailAddress;
 	}
-	
+
 	public void setLatestLocationTimestamp(Date latestLocationTimestamp) {
 		this.latestLocationTimestamp = latestLocationTimestamp;
 	}
-	
+
 	public Date getLatestLocationTimestamp() {
 		return latestLocationTimestamp;
 	}
@@ -94,7 +94,7 @@ public class User {
 	public void setTripDeals(List<Provider> tripDeals) {
 		this.tripDeals = tripDeals;
 	}
-	
+
 	public List<Provider> getTripDeals() {
 		return tripDeals;
 	}

@@ -1,4 +1,4 @@
-package com.openclassrooms.tourguide.user;
+package com.openclassrooms.tourguide.model;
 
 public class UserPreferences {
 	
@@ -14,7 +14,7 @@ public class UserPreferences {
 	public void setAttractionProximity(int attractionProximity) {
 		this.attractionProximity = attractionProximity;
 	}
-	
+
 	public int getAttractionProximity() {
 		return attractionProximity;
 	}
