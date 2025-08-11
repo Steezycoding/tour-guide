@@ -6,11 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.jupiter.api.Disabled;
+import com.openclassrooms.tourguide.controller.dto.NearbyAttractionDTO;
 import org.junit.jupiter.api.Test;
 
 import gpsUtil.GpsUtil;
-import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import com.openclassrooms.tourguide.helper.InternalTestHelper;
@@ -47,13 +46,13 @@ public class TestTourGuideService {
 		tourGuideService.addUser(user);
 		tourGuideService.addUser(user2);
 
-		User retrivedUser = tourGuideService.getUser(user.getUserName());
-		User retrivedUser2 = tourGuideService.getUser(user2.getUserName());
+		User retrievedUser = tourGuideService.getUser(user.getUserName());
+		User retrievedUser2 = tourGuideService.getUser(user2.getUserName());
 
 		tourGuideService.tracker.stopTracking();
 
-		assertEquals(user, retrivedUser);
-		assertEquals(user2, retrivedUser2);
+		assertEquals(user, retrievedUser);
+		assertEquals(user2, retrievedUser2);
 	}
 
 	@Test
@@ -92,7 +91,6 @@ public class TestTourGuideService {
 		assertEquals(user.getUserId(), visitedLocation.userId);
 	}
 
-	@Disabled // Not yet implemented
 	@Test
 	public void getNearbyAttractions() {
 		GpsUtil gpsUtil = new GpsUtil();
@@ -103,11 +101,28 @@ public class TestTourGuideService {
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
 
-		List<Attraction> attractions = tourGuideService.getNearByAttractions(visitedLocation);
+		List<NearbyAttractionDTO> attractions = tourGuideService.getNearByAttractions(visitedLocation, 5, user);
 
 		tourGuideService.tracker.stopTracking();
 
 		assertEquals(5, attractions.size());
+	}
+
+	@Test
+	public void getNearbyNullNumberAttractions() {
+		GpsUtil gpsUtil = new GpsUtil();
+		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
+		InternalTestHelper.setInternalUserNumber(0);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+
+		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
+		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
+
+		List<NearbyAttractionDTO> attractions = tourGuideService.getNearByAttractions(visitedLocation, null, user);
+
+		tourGuideService.tracker.stopTracking();
+
+		assertEquals(1, attractions.size());
 	}
 
 	public void getTripDeals() {
