@@ -94,6 +94,14 @@ public class TourGuideService {
 		return visitedLocation;
 	}
 
+	/**
+	 * Asynchronous method that wraps sequential trackUserLocation()
+	 * to be used for high volume users in order to improve performance.
+	 *
+	 * @param user
+	 * @return CompletableFuture<VisitedLocation> that completes when user location
+	 * tracking is done.
+	 */
 	public CompletableFuture<VisitedLocation> trackUserLocationAsync(User user) {
 		return CompletableFuture.supplyAsync(() -> trackUserLocation(user), executor);
 	}
@@ -109,6 +117,14 @@ public class TourGuideService {
 		return nearbyAttractions;
 	}
 
+	/**
+	 * Get the n closest attractions to the user's current location
+	 *
+	 * @param visitedLocation
+	 * @param numberOfAttractions (optional, default to 1)
+	 * @param user
+	 * @return a list of NearbyAttractionDTO
+	 */
 	public List<NearbyAttractionDTO> getNearByAttractions(VisitedLocation visitedLocation, Integer numberOfAttractions, User user) {
 		return gpsUtil.getAttractions().stream()
 				.sorted(Comparator.comparingDouble(attraction -> rewardsService.getDistance(visitedLocation.location, attraction)))

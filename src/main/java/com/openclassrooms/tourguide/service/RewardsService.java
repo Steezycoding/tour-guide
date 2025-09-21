@@ -55,6 +55,13 @@ public class RewardsService {
 		});
 	}
 
+	/**
+	 * Asynchronous method that wraps sequential calculateRewards()
+	 * to be used for high volume users in order to improve performance.
+	 *
+	 * @param user
+	 * @return CompletableFuture<Void> that completes when rewards calculation is done.
+	 */
 	public CompletableFuture<Void> calculateRewardsAsync(User user) {
 		return CompletableFuture.runAsync(() -> calculateRewards(user), executor);
 	}
